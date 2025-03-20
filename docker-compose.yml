@@ -1,0 +1,14 @@
+version: '3.1'
+services:
+  db:
+    image: mysql:8
+    container_name: my-mysql
+    environment:
+      MYSQL_DATABASE: app
+      MYSQL_USER: user
+      MYSQL_PASSWORD: 1234
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./volume/schema.sql:/docker-entrypoint-initdb.d/schema.sql
