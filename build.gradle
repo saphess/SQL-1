@@ -18,6 +18,7 @@ dependencies {
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
 
+    // Файкер для генерации даты
     testImplementation 'com.github.javafaker:javafaker:1.0.2'
 
     compileOnly 'org.projectlombok:lombok:1.18.36'
@@ -26,7 +27,17 @@ dependencies {
     testCompileOnly 'org.projectlombok:lombok:1.18.36'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.36'
 
+    // Селенид для взаимодействия с объектами страницы
     testImplementation 'com.codeborne:selenide:6.17.2'
+
+    // DButils для sql запросов
+    testImplementation 'commons-dbutils:commons-dbutils:1.8.1'
+
+    //Connector с бд
+    testImplementation 'com.mysql:mysql-connector-j:9.2.0'
+
+    //Логи
+    testImplementation 'org.slf4j:slf4j-simple:2.0.17'
 }
 
 test {
