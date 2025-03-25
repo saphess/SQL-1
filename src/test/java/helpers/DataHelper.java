@@ -1,21 +1,10 @@
-package Helpers;
+package helpers;
 
-import com.github.javafaker.Faker;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 public class DataHelper {
-    private static final Faker FAKER = new Faker();
-
-    public User generateUser() {
-        return new User(
-                FAKER.internet().password(),
-                FAKER.name().firstName(),
-                "password",
-                "active"
-        );
-    }
 
     @Data
     @AllArgsConstructor

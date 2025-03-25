@@ -1,7 +1,9 @@
-package Page;
+package page;
 
-import Helpers.DataHelper;
-import Helpers.SQLHelper;
+import helpers.DataHelper;
+import helpers.SQLHelper;
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selectors;
 import com.codeborne.selenide.SelenideElement;
 
 import static com.codeborne.selenide.Selenide.$;
@@ -14,10 +16,15 @@ public class VerificationPage {
 
     public VerificationPage() {
         webdriver().shouldHave(url("http://localhost:9999/verification"));
+        $(Selectors.withText("Необходимо подтверждение")).should(Condition.visible);
+        codeField.should(Condition.visible);
+        buttonNext.should(Condition.text("Продолжить"), Condition.visible);
     }
 
-    public void validVerify(DataHelper.User user){
+    public DashboardPage validVerify(DataHelper.User user){
         codeField.setValue(SQLHelper.getCode(user).getCode());
         buttonNext.click();
+
+        return new DashboardPage();
     }
 }

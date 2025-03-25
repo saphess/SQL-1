@@ -1,4 +1,4 @@
-package Helpers;
+package helpers;
 
 import lombok.SneakyThrows;
 import org.apache.commons.dbutils.QueryRunner;
@@ -16,9 +16,7 @@ public class SQLHelper {
         String requestSQL = "SELECT * FROM users WHERE login = ?";
         try (var conn = DBConnection.getCon()) {
             DataHelper.User user = RUNNER.query(conn, requestSQL, new BeanHandler<>(DataHelper.User.class), login);
-            if (user.getLogin().equals("vasya")){
-                user.setPassword("qwerty123");
-            }
+            user.setPassword("qwerty123");
             return user;
         }
     }
@@ -28,6 +26,20 @@ public class SQLHelper {
         String requestSQL = "SELECT * FROM auth_codes WHERE user_id = ? ORDER BY created DESC";
         try (var conn = DBConnection.getCon()) {
             return RUNNER.query(conn, requestSQL, new BeanHandler<>(DataHelper.AuthCode.class), user.getId());
+        }
+    }
+
+    @SneakyThrows
+    public static void clearingDB() {
+        String delCardTransactionSQL = "DELETE FROM card_transactions";
+        String delCard = "DELETE FROM cards";
+        String delAuthCodes = "DELETE FROM auth_codes";
+        String delUsers = "DELETE FROM users";
+        try (var conn = DBConnection.getCon()) {
+            RUNNER.update(conn, delCardTransactionSQL);
+            RUNNER.update(conn, delCard);
+            RUNNER.update(conn, delAuthCodes);
+            RUNNER.update(conn, delUsers);
         }
     }
 
