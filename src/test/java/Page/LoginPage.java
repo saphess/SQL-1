@@ -1,3 +1,6 @@
+package Page;
+
+import Helpers.DataHelper;
 import com.codeborne.selenide.SelenideElement;
 
 import static com.codeborne.selenide.Selenide.$;
@@ -8,9 +11,11 @@ public class LoginPage {
     private static final SelenideElement buttonNext = $("[data-test-id='action-login']");
     private final SelenideElement errorNotification = $("[data-test-id='error-notification']");
 
-    public LoginPage() {
-        loginField.setValue(SQLHelper.getFirstUser().getLogin());
-        passwordField.setValue(SQLHelper.getFirstUser().getPassword());
+    public VerificationPage validAuth(DataHelper.User user) {
+        loginField.setValue(user.getLogin());
+        passwordField.setValue(user.getPassword());
         buttonNext.click();
+
+        return new VerificationPage();
     }
 }

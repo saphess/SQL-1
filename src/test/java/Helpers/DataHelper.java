@@ -1,3 +1,5 @@
+package Helpers;
+
 import com.github.javafaker.Faker;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,5 +25,15 @@ public class DataHelper {
         String login;
         String password;
         String status;
+    }
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class AuthCode {
+        String id;
+        String user_id;
+        String code;
+        String created;
     }
 }

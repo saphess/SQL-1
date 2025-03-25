@@ -1,3 +1,5 @@
+package Helpers;
+
 import lombok.SneakyThrows;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
@@ -10,18 +12,22 @@ public class SQLHelper {
     private static final QueryRunner RUNNER = new QueryRunner();
 
     @SneakyThrows
-    public static void updateUsers(DataHelper.User user) {
-        String requestSQL = "INSERT INTO users(id, login, password) VALUES (?, ?, ?)";
+    public static DataHelper.User getUser(String login) {
+        String requestSQL = "SELECT * FROM users WHERE login = ?";
         try (var conn = DBConnection.getCon()) {
-            RUNNER.update(conn, requestSQL, user.getId(), user.getLogin(), user.getPassword());
+            DataHelper.User user = RUNNER.query(conn, requestSQL, new BeanHandler<>(DataHelper.User.class), login);
+            if (user.getLogin().equals("vasya")){
+                user.setPassword("qwerty123");
+            }
+            return user;
         }
     }
 
     @SneakyThrows
-    public static DataHelper.User getFirstUser() {
-        String requestSQL = "SELECT * FROM users";
+    public static DataHelper.AuthCode getCode(DataHelper.User user) {
+        String requestSQL = "SELECT * FROM auth_codes WHERE user_id = ? ORDER BY created DESC";
         try (var conn = DBConnection.getCon()) {
-            return RUNNER.query(conn, requestSQL, new BeanHandler<>(DataHelper.User.class));
+            return RUNNER.query(conn, requestSQL, new BeanHandler<>(DataHelper.AuthCode.class), user.getId());
         }
     }
 
